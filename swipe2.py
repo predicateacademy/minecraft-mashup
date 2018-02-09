@@ -3,6 +3,7 @@ import mcpi.block as block
 import time
 import random
 import words
+import disasters
 
 mc = Minecraft.create()
 x, y, z = mc.player.getPos()
@@ -64,5 +65,3 @@ while True:
 
     if hitted == block.GRASS.id:
         words.draw(mc, "Predicate Academy", block.TNT.id)
-
-    
