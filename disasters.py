@@ -7,6 +7,8 @@ eruptSound = pygame.mixer.Sound('lava.ogg')
 meteorSound = pygame.mixer.Sound('meteor.ogg')
 
 def earthquake(mc, x, z):
+    x = int(x)
+    z = int(z)
     mc.postToChat('Earthquake!')
     y = mc.getHeight(x, z)
     endtime = time.time() + 60
@@ -32,6 +34,8 @@ def earthquake(mc, x, z):
         mc.setBlocks(bx, by-1, bz, bx, -60, bz, block.AIR.id)
 
 def sinkhole(mc, x, z):
+    x = int(x)
+    z = int(z)
     blks = []
     y = mc.getHeight(x, z)
     xdist = random.randint(1, 5)
@@ -47,12 +51,17 @@ def sinkhole(mc, x, z):
         mc.setBlock(blk[0], y, blk[1], block.GRAVEL.id)
 
 def geyser(mc, x, z):
+    x = int(x)
+    z = int(z)
     y = mc.getHeight(x, z)
     mc.setBlocks(x-2, y+5, z-2, x+2, -60, z+2, block.WATER.id)
     time.sleep(25)
     mc.setBlocks(x-2, y+5, z-2, x+2, -60, z+2, block.AIR.id)
 
 def eruption(mc, x, z):
+    x = int(x)
+    z = int(z)
+
     y = mc.getHeight(x, z)
     for i in range(3):
         eruptSound.play()
@@ -78,6 +87,9 @@ def eruption(mc, x, z):
         eruptSound.play()
 
 def meteor(mc, x, z):
+    x = int(x)
+    z = int(z)
+
     mc.postToChat('Meteor approaching!')
     y = 64
     h = mc.getHeight(x, z)
@@ -93,12 +105,18 @@ def meteor(mc, x, z):
     mc.setBlocks(x-1, y-1, z-1, x+1, y+1, z+1, block.OBSIDIAN.id)
 
 def meteor_shower(mc, x, z):
+    x = int(x)
+    z = int(z)
+
     for i in range(10):
         mx = random.randint(x-15, x+15)
         mz = random.randint(z-15, z+15)
         meteor(mc, mx, mz)
 
 def heatwave(mc, x, z):
+    x = int(x)
+    z = int(z)
+
     y = mc.getHeight(x, z)
     endtime = time.time() + random.randint(50, 90)
     while time.time() < endtime:
@@ -125,6 +143,9 @@ def heatwave(mc, x, z):
         mc.setBlock(bx, by, bz, blk, blkd)
 
 def tsunami(mc, x, z):
+    x = int(x)
+    z = int(z)
+    
     tend = time.time() + 15
     tx = x
     while time.time() < tend:
@@ -143,4 +164,3 @@ def tsunami(mc, x, z):
         time.sleep(0.1)
         tx += 1
         hm -= 0.2
-
