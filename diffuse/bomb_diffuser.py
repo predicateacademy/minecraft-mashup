@@ -26,10 +26,14 @@ for bomb in bombs:
 #pick a random loser location
 loser = random.choice(bombs)
 
+rounds = 1
+
 while True:
 
 	if len(bombs)==1:
 		mc.postToChat("winner winner chicken dinner")
+		mc.postToChat("you survived " + str(rounds) + " rounds.")
+		rounds += 1
 		break
 
 	#wait for a sword hit on a block we care about

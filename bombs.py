@@ -5,12 +5,13 @@ import threading
 
 class ExplodingBlock(threading.Thread):
 
-    def __init__(self, pos, fuseInSecs, blastRadius):
+    def __init__(self, pos, fuseInSecs, blastRadius, blk):
         #Setup object
         threading.Thread.__init__(self)
         self.pos = pos
         self.fuseInSecs = fuseInSecs
         self.blastRadius = blastRadius
+        self.blk = blk
 
     def run(self):
         #Open connect to minecraft
@@ -34,7 +35,7 @@ class ExplodingBlock(threading.Thread):
             for y in range(blastRadius*-1, blastRadius):
                 for z in range(blastRadius*-1,blastRadius):
                     if x**2 + y**2 + z**2 < blastRadius**2:
-                        mc.setBlock(pos.x + x, pos.y + y, pos.z + z, block.AIR)
+                        mc.setBlock(pos.x + x, pos.y + y, pos.z + z, self.blk, 1)
 
 if __name__ == "__main__":
 
@@ -43,8 +44,8 @@ if __name__ == "__main__":
     # - minecraft needs to be running and in a game
     mc = Minecraft.create()
 
-    #Post a message to the minecraft chat window 
-    mc.postToChat("Minecraft Bombs, Hit (Right Click) a Block, www.stuffaboutcode.com")
+    #Post a message to the minecraft chat window
+    mc.postToChat("Mr Mikes World Destroyer")
 
     #loop until Ctrl C
     try:
@@ -55,10 +56,11 @@ if __name__ == "__main__":
             if blockHits:
                 # for each block that has been hit
                 for blockHit in blockHits:
+                    blk = mc.getBlock(blockHit.pos)
                     #Create and run the exploding block class in its own thread
                     # pass the position of the block, fuse time in seconds and blast radius
                     # threads are used so multiple exploding blocks can be created
-                    explodingBlock = ExplodingBlock(blockHit.pos, 3, 3)
+                    explodingBlock = ExplodingBlock(blockHit.pos, 3, 3, blk)
                     explodingBlock.daemon
                     explodingBlock.start()
             time.sleep(0.1)
